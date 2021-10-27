@@ -31,11 +31,9 @@ function App() {
 			.then((resp) => resp.json())
 			.then((data) => setPokemon(data));
 	}, []);
-
-	if (!pokemon) {
+	if (pokemon.length === 0) {
 		return <div>Loading Data!</div>;
 	}
-
 	return (
 		<PokemonContext.Provider
 			value={{

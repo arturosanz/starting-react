@@ -4,15 +4,14 @@ import PokemonContext from "../PokemonContext";
 
 const PokemonInfo = () => {
 	const selectedItem = useContext(PokemonContext);
-
-	return selectedItem ? (
+	return selectedItem.selectedItem !== null ? (
 		<div>
-			<h1>{selectedItem.name.english}</h1>
+			<h1>{selectedItem.selectedItem.name.english}</h1>
 			<table>
-				{Object.keys(selectedItem.base).map((key) => (
+				{Object.keys(selectedItem.selectedItem.base).map((key) => (
 					<tr key={key}>
 						<td>{key}</td>
-						<td>{selectedItem.base[key]}</td>
+						<td>{selectedItem.selectedItem.base[key]}</td>
 					</tr>
 				))}
 			</table>

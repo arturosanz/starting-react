@@ -1,17 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import PokemonRow from "./PokemonRow";
-import "../App.css";
 import PokemonContext from "../PokemonContext";
+import styled from "@emotion/styled";
+
+const Head = styled("th")`
+	text-align: left;
+	font-size: x-large;
+`;
 
 const PokemonTable = () => {
-	const { pokemon, filter, setSelectedItem } = useState(PokemonContext);
+	const { pokemon, filter, setSelectedItem } = useContext(PokemonContext);
 
 	return (
 		<table width="100%">
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Type</th>
+					<Head>Name</Head>
+					<Head>Type</Head>
 				</tr>
 			</thead>
 			<tbody>
@@ -33,4 +38,3 @@ const PokemonTable = () => {
 };
 
 export default PokemonTable;
- 

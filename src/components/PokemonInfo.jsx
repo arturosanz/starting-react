@@ -1,18 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import useStore from "../store";
+import store from "../store";
+import { observer } from "mobx-react";
 
 const PokemonInfo = () => {
-	const selectedItem = useStore((state) => state.selectedItem);
-
-	return selectedItem !== null ? (
+	return store.selectedItem !== null ? (
 		<div>
-			<h1>{selectedItem.name.english}</h1>
+			<h1>{store.selectedItem.name.english}</h1>
 			<table>
-				{Object.keys(selectedItem.base).map((key) => (
+				{Object.keys(store.selectedItem.base).map((key) => (
 					<tr key={key}>
 						<td>{key}</td>
-						<td>{selectedItem.base[key]}</td>
+						<td>{store.selectedItem.base[key]}</td>
 					</tr>
 				))}
 			</table>
@@ -36,4 +35,4 @@ PokemonInfo.propTypes = {
 	}),
 };
 
-export default PokemonInfo;
+export default observer(PokemonInfo);

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from "mobx";
+import { makeObservable, observable, computed } from "mobx";
 
 class Store {
 	filter = "";
@@ -6,7 +6,18 @@ class Store {
 	selectedItem = null;
 
 	constructor() {
-		makeAutoObservable(this);
+		makeObservable(this, {
+			filter: observable,
+			pokemon: observable,
+			selectedItem: observable,
+			filteredItem: computed,
+		});
+	}
+
+	get filteredItem() {
+		return this.pokemon.filter(({ name: { english } }) =>
+			english.toLowerCase().includes(this.filter.toLowerCase())
+		)
 	}
 
 	setFilter(filter) {

@@ -18,11 +18,7 @@ const PokemonTable = () => (
 			</tr>
 		</thead>
 		<tbody>
-			{store.pokemon
-				.filter(({ name: { english } }) =>
-					english.toLowerCase().includes(store.filter.toLowerCase())
-				)
-				.slice(0, 20)
+			{store.filteredItem.slice(0, 20)
 				.map((pokemon) => (
 					<PokemonRow
 						pokemon={pokemon}

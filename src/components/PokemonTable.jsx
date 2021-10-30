@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import React from "react";
 import PokemonRow from "./PokemonRow";
-import PokemonContext from "../PokemonContext";
+import useStore from "../store";
 import styled from "@emotion/styled";
 
 const Head = styled("th")`
@@ -9,10 +9,9 @@ const Head = styled("th")`
 `;
 
 const PokemonTable = () => {
-	const {
-		state: { pokemon, filter },
-		dispatch,
-	} = useContext(PokemonContext);
+	const filter = useStore((state) => state.filter);
+	const pokemon = useStore((state) => state.pokemon);
+	const setSelectedItem = useStore((state) => state.setSelectedItem);
 
 	return (
 		<table width="100%">
@@ -32,8 +31,7 @@ const PokemonTable = () => {
 						<PokemonRow
 							pokemon={pokemon}
 							key={pokemon.id}
-							onSelect={(pokemon) =>
-								dispatch({ type: "SET_SELECTEDITEM", payload: pokemon })
+							onSelect={(pokemon) => setSelectedItem(pokemon)
 							}
 						/>
 					))}

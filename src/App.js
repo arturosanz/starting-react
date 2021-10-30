@@ -5,6 +5,28 @@ import PokemonFilter from "./components/PokemonFilter";
 import PokemonTable from "./components/PokemonTable";
 import PokemonContext from "./PokemonContext";
 
+const pokemonReducer = (state, action) => {
+	switch (action.type) {
+		case "SET_FILTER":
+			return {
+				...state,
+				filter: action.payload,
+			};
+		case "SET_POKEMON":
+			return {
+				...state,
+				pokemon: action.payload,
+			};
+		case "SET_SELECTEDITEM":
+			return {
+				...state,
+				selectedItem: action.payload,
+			};
+		default:
+			throw new Error("No action");
+	}
+};
+
 const Container = styled("div")`
 	margin: auto;
 	width: 800px;
@@ -20,29 +42,32 @@ const Grid = styled("div")`
 	grid-template-columns: 70% 30%;
 	grid-column-gap: 1rem;
 `;
-
 function App() {
-	const [filter, setFilter] = React.useState("");
-	const [selectedItem, setSelectedItem] = React.useState(null);
-	const [pokemon, setPokemon] = React.useState([]);
+	const [state, dispatch] = React.useReducer(pokemonReducer, {
+		filter: "",
+		pokemon: [],
+		selectedItem: null,
+	});
 
 	React.useEffect(() => {
 		fetch("http://localhost:3000/starting-react/pokemon.json")
 			.then((resp) => resp.json())
-			.then((data) => setPokemon(data));
+			.then((data) =>
+				dispatch({
+					type: "SET_POKEMON",
+					payload: data,
+				})
+			);
 	}, []);
-	if (pokemon.length === 0) {
+
+	if (state.pokemon.length === 0) {
 		return <div>Loading Data!</div>;
 	}
 	return (
 		<PokemonContext.Provider
 			value={{
-				filter,
-				selectedItem,
-				pokemon,
-				setFilter,
-				setSelectedItem,
-				setPokemon,
+				state,
+				dispatch,
 			}}
 		>
 			<Container>
